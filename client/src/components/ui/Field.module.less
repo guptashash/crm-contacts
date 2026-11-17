@@ -1,0 +1,51 @@
+@import '../../styles/tokens.less';
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: @space-1;
+  min-width: 0;
+}
+
+.label {
+  font-size: @font-sm;
+  font-weight: 600;
+}
+
+.control {
+  width: 100%;
+  min-height: @control-height;
+  padding: 0 @space-3;
+  border: 1px solid @color-border-strong;
+  border-radius: @radius;
+  background: @color-surface;
+
+  &:hover {
+    border-color: @color-muted;
+  }
+  &[aria-invalid='true'] {
+    border-color: @color-danger;
+    background: @color-danger-soft;
+  }
+  &:disabled {
+    background: @color-bg;
+    cursor: not-allowed;
+  }
+}
+
+.select {
+  padding-right: @space-6;
+  cursor: pointer;
+}
+
+.hint {
+  margin: 0;
+  font-size: @font-sm;
+  color: @color-muted;
+}
+
+.error {
+  margin: 0;
+  font-size: @font-sm;
+  color: @color-danger;
+}

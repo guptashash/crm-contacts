@@ -1,11 +1,40 @@
+// Design tokens: the only place colours, spacing and sizes are defined.
+
 @color-primary: #2563eb;
-@color-danger:  #dc2626;
-@color-text:    #111827;
-@color-muted:   #6b7280;
-@color-border:  #e5e7eb;
-@color-bg:      #f9fafb;
+@color-primary-dark: #1d4ed8;
+@color-primary-soft: #eff6ff;
+@color-danger: #dc2626;
+@color-danger-soft: #fef2f2;
+@color-success: #15803d;
+@color-success-soft: #f0fdf4;
+@color-warning-soft: #fffbeb;
+@color-warning: #b45309;
+@color-text: #111827;
+@color-muted: #6b7280;
+@color-border: #e5e7eb;
+@color-border-strong: #d1d5db;
+@color-bg: #f9fafb;
+@color-surface: #ffffff;
 
-@space-1: 4px;  @space-2: 8px;  @space-3: 12px;  @space-4: 16px;  @space-6: 24px;
+@space-1: 4px;
+@space-2: 8px;
+@space-3: 12px;
+@space-4: 16px;
+@space-5: 20px;
+@space-6: 24px;
+@space-8: 32px;
+
 @radius: 6px;
+@radius-lg: 10px;
+@font-sm: 13px;
+@font-md: 14px;
+@font-lg: 18px;
+@font-xl: 22px;
 
-@bp-md: ~"(min-width: 768px)"; 
+@control-height: 40px; // touch-friendly minimum
+
+@shadow: 0 1px 2px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.08);
+
+// Mobile first: base styles are for phones, these switch to wider layouts.
+@bp-md: ~'(min-width: 768px)';
+@bp-lg: ~'(min-width: 1024px)';

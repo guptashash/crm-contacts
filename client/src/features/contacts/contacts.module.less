@@ -1,0 +1,295 @@
+@import '../../styles/tokens.less';
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: @space-4;
+}
+
+.header h1 {
+  font-size: @font-xl;
+}
+
+// ---------- Toolbar ----------
+
+.toolbar {
+  display: grid;
+  gap: @space-3;
+  padding: @space-4;
+  background: @color-surface;
+  border: 1px solid @color-border;
+  border-radius: @radius-lg;
+  box-shadow: @shadow;
+}
+
+.filters {
+  display: grid;
+  gap: @space-3;
+}
+
+.selects {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: @space-3;
+}
+
+.tagFilter {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: @space-2;
+  margin: 0;
+  padding: 0;
+  border: 0;
+
+  legend {
+    float: left; // keeps the legend inline with the chips
+    margin-right: @space-2;
+    font-size: @font-sm;
+    font-weight: 600;
+  }
+}
+
+.tagToggle {
+  min-height: 32px;
+  padding: 0 @space-3;
+  border: 1px solid @color-border-strong;
+  border-radius: 999px;
+  background: @color-surface;
+  font-size: @font-sm;
+  cursor: pointer;
+
+  &:hover {
+    border-color: @color-primary;
+  }
+  &[aria-pressed='true'] {
+    background: @color-primary;
+    border-color: @color-primary;
+    color: #fff;
+  }
+}
+
+.clearBtn {
+  justify-self: start;
+}
+
+@media @bp-lg {
+  .toolbar {
+    grid-template-columns: minmax(240px, 1fr) 2fr;
+    align-items: start;
+  }
+  .clearBtn {
+    grid-column: 1 / -1;
+  }
+}
+
+// ---------- Bulk bar ----------
+
+.bulkBar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: @space-3;
+  padding: @space-3 @space-4;
+  background: @color-primary-soft;
+  border: 1px solid fade(@color-primary, 30%);
+  border-radius: @radius-lg;
+}
+
+.bulkCount {
+  margin: 0;
+  line-height: @control-height;
+}
+
+.bulkWarn {
+  color: @color-danger;
+}
+
+.bulkForm {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: @space-2;
+
+  > :first-child {
+    width: 220px;
+  }
+}
+
+// ---------- Results ----------
+
+.status {
+  display: flex;
+  align-items: center;
+  gap: @space-2;
+  min-height: 20px;
+  margin: 0;
+  font-size: @font-sm;
+  color: @color-muted;
+}
+
+.results {
+  background: @color-surface;
+  border: 1px solid @color-border;
+  border-radius: @radius-lg;
+  box-shadow: @shadow;
+  overflow: hidden;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  padding: @space-8;
+}
+
+// Old rows stay visible but dimmed while the next page/filter loads.
+.stale {
+  opacity: 0.55;
+  transition: opacity 0.15s;
+}
+
+.muted {
+  color: @color-muted;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: @space-1;
+}
+
+// ---------- Table: cards on phones, table from tablet up ----------
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+
+  thead {
+    // On phones only the select-all checkbox is shown from the header.
+    th:not(.checkCell) {
+      display: none;
+    }
+    tr {
+      display: flex;
+      padding: @space-2 @space-4;
+      border-bottom: 1px solid @color-border;
+    }
+  }
+
+  tbody tr {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: @space-3;
+    padding: @space-3 @space-4;
+    border-bottom: 1px solid @color-border;
+  }
+
+  tbody td,
+  tbody th {
+    display: block;
+    padding: 2px 0;
+    text-align: left;
+    font-weight: normal;
+    min-width: 0;
+  }
+
+  // Card layout: checkbox in column 1, everything else stacked in column 2.
+  tbody .checkCell {
+    grid-row: 1 / span 6;
+    padding-top: 2px;
+  }
+  tbody td[data-label]::before {
+    content: attr(data-label) ': ';
+    color: @color-muted;
+    font-size: @font-sm;
+  }
+}
+
+.nameCell a {
+  font-weight: 600;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.selectedRow {
+  background: @color-primary-soft;
+}
+
+.checkCell input {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media @bp-md {
+  .table {
+    thead tr,
+    tbody tr {
+      display: table-row;
+      padding: 0;
+    }
+    thead th:not(.checkCell) {
+      display: table-cell;
+    }
+    th,
+    td,
+    tbody td,
+    tbody th {
+      display: table-cell;
+      padding: @space-3 @space-3;
+      vertical-align: middle;
+      border-bottom: 1px solid @color-border;
+    }
+    thead th {
+      background: @color-bg;
+      font-size: @font-sm;
+      font-weight: 600;
+      color: @color-muted;
+      text-align: left;
+      white-space: nowrap;
+    }
+    tbody td[data-label]::before {
+      content: none;
+    }
+    .checkCell {
+      width: 44px;
+      padding-left: @space-4;
+    }
+    tbody tr:hover {
+      background: @color-bg;
+    }
+    tbody tr.selectedRow {
+      background: @color-primary-soft;
+    }
+  }
+
+  .truncate {
+    max-width: 220px;
+  }
+}
+
+// ---------- Pagination ----------
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: @space-4;
+}
+
+.pageLabel {
+  min-width: 64px;
+  text-align: center;
+  color: @color-muted;
+}

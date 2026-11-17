@@ -1,0 +1,59 @@
+@import '../../styles/tokens.less';
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: @space-2;
+  min-height: @control-height;
+  padding: 0 @space-4;
+  border: 1px solid transparent;
+  border-radius: @radius;
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 0.15s, border-color 0.15s;
+
+  &:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+}
+
+.sm {
+  min-height: 32px;
+  padding: 0 @space-3;
+  font-size: @font-sm;
+}
+
+.primary {
+  background: @color-primary;
+  color: #fff;
+  &:hover:not(:disabled) {
+    background: @color-primary-dark;
+  }
+}
+
+.secondary {
+  background: @color-surface;
+  border-color: @color-border-strong;
+  &:hover:not(:disabled) {
+    background: @color-bg;
+  }
+}
+
+.ghost {
+  background: transparent;
+  color: @color-primary;
+  &:hover:not(:disabled) {
+    background: @color-primary-soft;
+  }
+}
+
+.danger {
+  background: @color-danger;
+  color: #fff;
+  &:hover:not(:disabled) {
+    filter: brightness(0.92);
+  }
+}
