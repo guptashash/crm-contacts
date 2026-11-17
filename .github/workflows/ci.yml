@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Lint (ESLint with React Hooks + accessibility rules)
+        run: npm run lint
+
+      - name: Type check (server + client)
+        run: npm run typecheck
+
+      - name: Test (server API tests + client component tests)
+        run: npm test
+
+      - name: Build client
+        run: npm run build

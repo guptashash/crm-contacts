@@ -47,9 +47,8 @@ describe('ContactsPage', () => {
 
     await screen.findByRole('link', { name: 'Alice Ng' });
     const sent = listCalls(fetch)[0].searchParams;
-    expect(Object.fromEntries(sent)).toMatchObject({
-      q: 'ali', tags: 'VIP', company: 'Acme', sort: 'createdAt', order: 'desc',
-    });
+    const get = (k: string) => sent.get(k);
+    expect(['q', 'tags', 'company', 'sort', 'order'].map(get)).toEqual(['ali', 'VIP', 'Acme', 'createdAt', 'desc']);
     expect(screen.getByRole('searchbox', { name: 'Search contacts' })).toHaveValue('ali');
     expect(screen.getByRole('button', { name: 'VIP' })).toHaveAttribute('aria-pressed', 'true');
   });
