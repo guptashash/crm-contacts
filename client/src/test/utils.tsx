@@ -1,24 +1,35 @@
 import type { ReactNode } from 'react';
 import { render } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { vi } from 'vitest';
 import type { Contact } from '../api/types';
 import { LocationProbe } from './LocationProbe';
 
 
-export function renderWithProviders(ui: ReactNode, { route = '/' } = {}) {
+/**
+ * Renders `ui` at `route` inside a real data router (needed for useBlocker),
+ * plus a catch-all route so navigating away can be asserted.
+ */
+export function renderWithProviders(ui: ReactNode, { route = '/', path = '/' } = {}) {
   const queryClient = new QueryClient({
     defaultOptions: { queries: { retry: false }, mutations: { retry: false } },
   });
-  return render(
-    <QueryClientProvider client={queryClient}>
-      <MemoryRouter initialEntries={[route]}>
-        {ui}
-        <LocationProbe />
-      </MemoryRouter>
-    </QueryClientProvider>,
+  const router = createMemoryRouter(
+    [
+      { path, element: <>{ui}<LocationProbe /></> },
+      { path: '*', element: <LocationProbe /> },
+    ],
+    { initialEntries: [route] },
   );
+  return {
+    router,
+    ...render(
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
+      </QueryClientProvider>,
+    ),
+  };
 }
 
 type Handler = (url: URL, init?: RequestInit) => { status?: number; body: unknown } | undefined;

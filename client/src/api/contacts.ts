@@ -1,5 +1,15 @@
 import { api } from './client';
-import type { BulkTagResult, ContactListParams, ContactPage, Tag } from './types';
+import type { Activity, BulkTagResult, Contact, ContactListParams, ContactPage, Tag } from './types';
+
+/** PATCH body: the version the edit started from, plus only the fields that changed. */
+export type ContactUpdate = {
+  version: number;
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  phone?: string;
+  company?: string;
+};
 
 /** Builds the query string; empty values are left out so URLs stay short. */
 export function toSearchParams(p: ContactListParams, limit = 25): string {
@@ -23,6 +33,20 @@ export const contactsApi = {
 
   companies: (signal?: AbortSignal) =>
     api<{ items: string[] }>('/companies', { signal }).then((r) => r.items),
+
+  get: (id: number, signal?: AbortSignal) => api<Contact>(`/contacts/${id}`, { signal }),
+
+  update: (id: number, body: ContactUpdate) =>
+    api<Contact>(`/contacts/${id}`, { method: 'PATCH', body }),
+
+  addTag: (id: number, name: string) =>
+    api<{ tags: Tag[] }>(`/contacts/${id}/tags`, { method: 'POST', body: { name } }),
+
+  removeTag: (id: number, tagId: number) =>
+    api<{ tags: Tag[] }>(`/contacts/${id}/tags/${tagId}`, { method: 'DELETE' }),
+
+  activities: (id: number, signal?: AbortSignal) =>
+    api<{ items: Activity[] }>(`/contacts/${id}/activities?limit=20`, { signal }).then((r) => r.items),
 
   bulkAddTag: (contactIds: number[], tagName: string) =>
     api<BulkTagResult>('/contacts/bulk/tags', {
