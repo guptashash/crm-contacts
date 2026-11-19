@@ -2,6 +2,12 @@
 
 Browse, search, filter, sort and edit contacts, manage their tags (one at a time or in bulk), and see each contact's recent activity. React + TypeScript frontend, Node + Express backend, SQLite storage.
 
+## Live demo
+
+**https://crm-contacts.onrender.com** (replace with your Render URL)
+
+Hosted on Render's free tier as one Node service: Express serves the API at `/api` and the built React app for every other path. The free instance sleeps after 15 minutes idle, so the **first load can take about a minute**. Its disk is temporary, so the server re-seeds the same 5,000 demo contacts whenever it starts with an empty database; edits made in the demo don't persist across restarts.
+
 ## Running it
 
 Requires **Node 20+**.
@@ -21,6 +27,7 @@ Vite proxies `/api` to the backend, so no CORS setup is needed in development. R
 | `npm run lint` | ESLint with React Hooks and jsx-a11y rules |
 | `npm run typecheck` | TypeScript for server and client |
 | `npm run build` | Production build of the client |
+| `npm start` | Production mode: one server on port 4000 serving the API and the built client (run `npm run build` first) |
 
 CI (`.github/workflows/ci.yml`) runs lint, type check, tests and build on every push and pull request.
 

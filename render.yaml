@@ -1,0 +1,12 @@
+# Render Blueprint: one free web service that serves the API and the built React app.
+services:
+  - type: web
+    name: crm-contacts
+    runtime: node
+    plan: free
+    buildCommand: npm ci && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: "20"
