@@ -4,7 +4,7 @@ Browse, search, filter, sort and edit contacts, manage their tags (one at a time
 
 ## Live demo
 
-**https://crm-contacts.onrender.com** (replace with your Render URL)
+**https://crm-contacts-6jg3.onrender.com/**
 
 Hosted on Render's free tier as one Node service: Express serves the API at `/api` and the built React app for every other path. The free instance sleeps after 15 minutes idle, so the **first load can take about a minute**. Its disk is temporary, so the server re-seeds the same 5,000 demo contacts whenever it starts with an empty database; edits made in the demo don't persist across restarts.
 
